@@ -5,85 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Workouts</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-            padding: 2rem;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #1a1a2e;
-        }
-
-        .add-link {
-            display: inline-block;
-            background-color: #4361ee;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .add-link:hover {
-            background-color: #3a56d4;
-
-        }
-
-        .workout-card {
-            background: white;
-            border-radius: 8px;
-            padding: 1rem 1.2rem;
-            margin-bottom: 0.8rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-        }
-
-        .workout-activity {
-            font-weight: 600;
-            font-size: 1.05rem;
-
-        }
-
-        .workout-details {
-            color: #666;
-            font-size: 0.9rem;
-
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #888;
-
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; padding: 2rem; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        h1 { font-size: 1.8rem; color: #1a1a2e; }
+        .header-right { display: flex; gap: 0.8rem; align-items: center; }
+        .username { color: #666; font-size: 0.95rem; }
+        .btn { display: inline-block; background-color: #4361ee; color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.95rem; border: none; cursor: pointer; }
+        .btn:hover { background-color: #3a56d4; }
+        .btn-logout { background-color: #e74c3c; }
+        .btn-logout:hover { background-color: #c0392b; }
+        .btn-edit { background-color: #f39c12; padding: 0.3rem 0.8rem; font-size: 0.85rem; }
+        .btn-delete { background-color: #e74c3c; padding: 0.3rem 0.8rem; font-size: 0.85rem; }
+        .workout-card { background: white; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; }
+        .workout-activity { font-weight: 600; font-size: 1.05rem; }
+        .workout-details { color: #666; font-size: 0.9rem; }
+        .workout-actions { display: flex; gap: 0.5rem; }
+        .empty-state { text-align: center; padding: 3rem 1rem; color: #888; }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <h1>My Workouts</h1>
-        <a href="{% url 'add_workout' %}" class="add-link">+ Log a Workout</a>
+        <div class="header">
+            <h1>🏋️ My Workouts</h1>
+            <div class="header-right">
+                <span class="username">👤 {{ request.user.username }}</span>
+                <a href="{% url 'add_workout' %}" class="btn">+ Log Workout</a>
+                <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+            </div>
+        </div>
         {% if workouts %}
             {% for workout in workouts %}
                 <div class="workout-card">
@@ -91,10 +42,15 @@
                         <div class="workout-activity">{{ workout.activity }}</div>
                         <div class="workout-details">{{ workout.duration }} minutes</div>
                     </div>
-                    <div class="workout-details">{{ workout.date }}</div>
+                    <div style="display:flex; align-items:center; gap:1rem;">
+                        <div class="workout-details">{{ workout.date }}</div>
+                        <div class="workout-actions">
+                            <a href="{% url 'edit_workout' workout.pk %}" class="btn btn-edit">✏️ Edit</a>
+                            <a href="{% url 'delete_workout' workout.pk %}" class="btn btn-delete">🗑️ Delete</a>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
-
         {% else %}
             <div class="empty-state">
                 <p>No workouts logged yet. Start by adding one!</p>
