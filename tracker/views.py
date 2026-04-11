@@ -1,12 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Workout
+from .models import Workout, Category
 from .forms import WorkoutForm
 
 @login_required
 def workout_list(request):
-    workouts = Workout.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'tracker/workout_list.html', {'workouts': workouts})
+    workouts = Workout.objects.filter(user=request.user).select_related('category').order_by('-date')
+    categories = Category.objects.all()
+
+    # Filter by category if selected
+    category_filter = request.GET.get('category')
+    if category_filter:
+        workouts = workouts.filter(category__name__iexact=category_filter)
+
+    return render(request, 'tracker/workout_list.html', {
+        'workouts': workouts,
+        'categories': categories,
+        'selected_category': category_filter,
+    })
 
 @login_required
 def add_workout(request):

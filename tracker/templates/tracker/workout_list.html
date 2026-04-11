@@ -7,10 +7,10 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; padding: 2rem; }
-        .container { max-width: 700px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .container { max-width: 750px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
         h1 { font-size: 1.8rem; color: #1a1a2e; }
-        .header-right { display: flex; gap: 0.8rem; align-items: center; }
+        .header-right { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
         .username { color: #666; font-size: 0.95rem; }
         .btn { display: inline-block; background-color: #4361ee; color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.95rem; border: none; cursor: pointer; }
         .btn:hover { background-color: #3a56d4; }
@@ -18,15 +18,28 @@
         .btn-logout:hover { background-color: #c0392b; }
         .btn-edit { background-color: #f39c12; padding: 0.3rem 0.8rem; font-size: 0.85rem; }
         .btn-delete { background-color: #e74c3c; padding: 0.3rem 0.8rem; font-size: 0.85rem; }
-        .workout-card { background: white; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; }
+        .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+        .filter-bar span { font-size: 0.9rem; color: #666; font-weight: 600; }
+        .filter-btn { padding: 0.4rem 1rem; border-radius: 20px; border: 2px solid #ddd; background: white; cursor: pointer; font-size: 0.85rem; text-decoration: none; color: #555; transition: all 0.2s; }
+        .filter-btn:hover { border-color: #4361ee; color: #4361ee; }
+        .filter-btn.active { background-color: #4361ee; color: white; border-color: #4361ee; }
+        .workout-card { background: white; border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #4361ee; transition: transform 0.1s; }
+        .workout-card:hover { transform: translateX(3px); }
         .workout-activity { font-weight: 600; font-size: 1.05rem; }
-        .workout-details { color: #666; font-size: 0.9rem; }
+        .workout-details { color: #666; font-size: 0.9rem; margin-top: 0.2rem; }
         .workout-actions { display: flex; gap: 0.5rem; }
-        .empty-state { text-align: center; padding: 3rem 1rem; color: #888; }
+        .badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; margin-top: 0.4rem; }
+        .empty-state { text-align: center; padding: 3rem 1rem; color: #888; background: white; border-radius: 10px; }
+        .empty-state p { font-size: 1.1rem; margin-bottom: 1rem; }
+        .stats-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .stat-card { background: white; border-radius: 8px; padding: 0.8rem 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); flex: 1; min-width: 120px; text-align: center; }
+        .stat-number { font-size: 1.5rem; font-weight: 700; color: #4361ee; }
+        .stat-label { font-size: 0.8rem; color: #888; margin-top: 0.2rem; }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <h1>🏋️ My Workouts</h1>
             <div class="header-right">
@@ -35,15 +48,61 @@
                 <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
             </div>
         </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number">{{ workouts.count }}</div>
+                <div class="stat-label">Total Workouts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">
+                    {% with total=0 %}
+                        {{ workouts|length }}
+                    {% endwith %}
+                </div>
+                <div class="stat-label">This Filter</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ categories.count }}</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+
+        <!-- Category Filter Bar -->
+        <div class="filter-bar">
+            <span>Filter:</span>
+            <a href="{% url 'workout_list' %}" class="filter-btn {% if not selected_category %}active{% endif %}">
+                All
+            </a>
+            {% for category in categories %}
+                <a href="?category={{ category.name }}"
+                   class="filter-btn {% if selected_category == category.name %}active{% endif %}"
+                   style="{% if selected_category == category.name %}background-color: {{ category.color }}; border-color: {{ category.color }};{% else %}border-color: {{ category.color }}; color: {{ category.color }};{% endif %}">
+                    {{ category.icon }} {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- Workout List -->
         {% if workouts %}
             {% for workout in workouts %}
-                <div class="workout-card">
+                <div class="workout-card" style="border-left-color: {{ workout.category.color|default:'#4361ee' }};">
                     <div>
-                        <div class="workout-activity">{{ workout.activity }}</div>
-                        <div class="workout-details">{{ workout.duration }} minutes</div>
+                        <div class="workout-activity">
+                            {{ workout.category.icon|default:'💪' }} {{ workout.activity }}
+                        </div>
+                        <div class="workout-details">⏱ {{ workout.duration }} minutes</div>
+                        {% if workout.category %}
+                            <span class="badge" style="background-color: {{ workout.category.color }}22; color: {{ workout.category.color }};">
+                                {{ workout.category.name }}
+                            </span>
+                        {% else %}
+                            <span class="badge" style="background-color: #eee; color: #888;">Uncategorized</span>
+                        {% endif %}
                     </div>
-                    <div style="display:flex; align-items:center; gap:1rem;">
-                        <div class="workout-details">{{ workout.date }}</div>
+                    <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; justify-content:flex-end;">
+                        <div class="workout-details">📅 {{ workout.date }}</div>
                         <div class="workout-actions">
                             <a href="{% url 'edit_workout' workout.pk %}" class="btn btn-edit">✏️ Edit</a>
                             <a href="{% url 'delete_workout' workout.pk %}" class="btn btn-delete">🗑️ Delete</a>
@@ -53,7 +112,8 @@
             {% endfor %}
         {% else %}
             <div class="empty-state">
-                <p>No workouts logged yet. Start by adding one!</p>
+                <p>No workouts found! 💪</p>
+                <a href="{% url 'add_workout' %}" class="btn">+ Log Your First Workout</a>
             </div>
         {% endif %}
     </div>
