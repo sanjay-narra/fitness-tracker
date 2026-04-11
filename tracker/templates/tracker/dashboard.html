@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f5f7fa; color: #333; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+        h1 { font-size: 1.8rem; color: #1a1a2e; }
+        .header-right { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .btn { display: inline-block; background-color: #4361ee; color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.95rem; border: none; cursor: pointer; }
+        .btn:hover { background-color: #3a56d4; }
+        .btn-logout { background-color: #e74c3c; }
+        .btn-logout:hover { background-color: #c0392b; }
+        .btn-back { background-color: #6c757d; }
+        .btn-back:hover { background-color: #5a6268; }
+
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; border-top: 4px solid #4361ee; }
+        .stat-card:nth-child(2) { border-top-color: #e74c3c; }
+        .stat-card:nth-child(3) { border-top-color: #27ae60; }
+        .stat-card:nth-child(4) { border-top-color: #f39c12; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: #1a1a2e; }
+        .stat-label { font-size: 0.85rem; color: #888; margin-top: 0.3rem; font-weight: 500; }
+        .stat-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+
+        /* Charts Grid */
+        .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 650px) { .charts-grid { grid-template-columns: 1fr; } }
+        .chart-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .chart-title { font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+        .chart-container { position: relative; }
+
+        /* Empty State */
+        .empty-state { text-align: center; padding: 3rem; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 My Dashboard</h1>
+            <div class="header-right">
+                <span style="color:#666; font-size:0.95rem; align-self:center;">👤 {{ request.user.username }}</span>
+                <a href="{% url 'workout_list' %}" class="btn btn-back">🏋️ Workouts</a>
+                <a href="{% url 'add_workout' %}" class="btn">+ Log Workout</a>
+                <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🏋️</div>
+                <div class="stat-number">{{ total_workouts }}</div>
+                <div class="stat-label">Total Workouts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-number">{{ total_minutes }}</div>
+                <div class="stat-label">Total Minutes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🕐</div>
+                <div class="stat-number">{{ total_hours }}</div>
+                <div class="stat-label">Total Hours</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-number" style="font-size:1rem;">{{ most_active_day }}</div>
+                <div class="stat-label">Most Active Day</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        {% if total_workouts > 0 %}
+        <div class="charts-grid">
+
+            <!-- Bar Chart -->
+            <div class="chart-card">
+                <div class="chart-title">📅 Weekly Activity (Last 7 Days)</div>
+                <div class="chart-container">
+                    <canvas id="weeklyChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Doughnut Chart -->
+            <div class="chart-card">
+                <div class="chart-title">🏷️ By Category</div>
+                <div class="chart-container">
+                    <canvas id="categoryChart" height="200"></canvas>
+                </div>
+            </div>
+
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p style="font-size:1.2rem; margin-bottom:1rem;">No workout data yet! 💪</p>
+            <a href="{% url 'add_workout' %}" class="btn">+ Log Your First Workout</a>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        // Data from Django
+        const weeklyLabels = {{ last_7_days|safe }};
+        const weeklyMinutes = {{ last_7_minutes|safe }};
+        const categoryLabels = {{ category_labels|safe }};
+        const categoryCounts = {{ category_counts|safe }};
+        const categoryColors = {{ category_colors|safe }};
+
+        // Bar Chart — Weekly Activity
+        const weeklyCtx = document.getElementById('weeklyChart');
+        if (weeklyCtx) {
+            new Chart(weeklyCtx, {
+                type: 'bar',
+                data: {
+                    labels: weeklyLabels,
+                    datasets: [{
+                        label: 'Minutes',
+                        data: weeklyMinutes,
+                        backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                        borderColor: '#4361ee',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ` ${ctx.raw} minutes`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 10 },
+                            title: { display: true, text: 'Minutes' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Doughnut Chart — Category Breakdown
+        const categoryCtx = document.getElementById('categoryChart');
+        if (categoryCtx) {
+            new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: categoryLabels,
+                    datasets: [{
+                        data: categoryCounts,
+                        backgroundColor: categoryColors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { padding: 15, font: { size: 12 } }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ` ${ctx.label}: ${ctx.raw} workouts`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

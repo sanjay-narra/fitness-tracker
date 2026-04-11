@@ -35,6 +35,8 @@
         .stat-card { background: white; border-radius: 8px; padding: 0.8rem 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); flex: 1; min-width: 120px; text-align: center; }
         .stat-number { font-size: 1.5rem; font-weight: 700; color: #4361ee; }
         .stat-label { font-size: 0.8rem; color: #888; margin-top: 0.2rem; }
+        .btn-dashboard { background-color: #27ae60; }
+        .btn-dashboard:hover { background-color: #219a52; }
     </style>
 </head>
 <body>
@@ -43,9 +45,10 @@
         <div class="header">
             <h1>🏋️ My Workouts</h1>
             <div class="header-right">
-                <span class="username">👤 {{ request.user.username }}</span>
-                <a href="{% url 'add_workout' %}" class="btn">+ Log Workout</a>
-                <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+              <span class="username">👤 {{ request.user.username }}</span>
+              <a href="{% url 'dashboard' %}" class="btn btn-dashboard">📊 Dashboard</a>
+              <a href="{% url 'add_workout' %}" class="btn">+ Log Workout</a>
+              <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
             </div>
         </div>
 
