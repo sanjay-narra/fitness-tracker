@@ -17,11 +17,11 @@
 
 | Login | Workouts |
 |-------|----------|
-| ![Login](screenshots/login.png) | ![Workouts](screenshots/workouts.png) |
+| ![Login](screenshots/Login.png) | ![Workouts](screenshots/workouts.png) |
 
 | Dashboard | Add Workout |
 |-----------|-------------|
-| ![Dashboard](screenshots/dashboard.png) | ![Add Workout](screenshots/add.png) |
+| ![Dashboard](screenshots/dashboard.png) | ![Add Workout](screenshots/Add.png) |
 
 ---
 
