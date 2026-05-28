@@ -1,3 +1,16 @@
+---
+
+## 🖼️ Screenshots
+
+| Login | Workouts |
+|-------|----------|
+| ![Login](screenshots/login.png) | ![Workouts](screenshots/workouts.png) |
+
+| Dashboard | Add Workout |
+|-----------|-------------|
+| ![Dashboard](screenshots/dashboard.png) | ![Add Workout](screenshots/add.png) |
+
+---
 # 🏋️ FitTrack — Personal Fitness Tracker Web Application
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)
