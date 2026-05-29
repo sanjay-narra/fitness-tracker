@@ -77,38 +77,41 @@
 
 ---
 
-## 🏗️ Project Architecture
+## 📁 Project Architecture
+
+```
 fitness_tracker/
+├── fitness_project/            # Django project configuration
+│   ├── settings.py             # Project settings
+│   ├── urls.py                 # Root URL configuration
+│   └── wsgi.py                 # WSGI deployment entry point
 │
-├── fitness_project/           # Django project configuration
-│   ├── settings.py            # Project settings
-│   ├── urls.py                # Root URL configuration
-│   └── wsgi.py                # WSGI deployment entry point
+├── tracker/                    # Main application
+│   ├── models.py               # Category & Workout models
+│   ├── views.py                # Web views & dashboard logic
+│   ├── forms.py                # Django ModelForms
+│   ├── admin.py                # Customized admin panel
+│   ├── serializers.py          # DRF serializers for API
+│   ├── api_views.py            # REST API views
+│   ├── api_urls.py             # API URL patterns
+│   ├── urls.py                 # App URL patterns
+│   ├── migrations/             # Database migration history
+│   └── templates/tracker/      # HTML templates
+│       ├── workout_list.html   # Workout list with category filter
+│       ├── dashboard.html      # Charts and statistics dashboard
+│       ├── add_workout.html    # Add new workout form
+│       ├── edit_workout.html   # Edit workout form
+│       └── delete_workout.html # Delete confirmation page
 │
-├── tracker/                   # Main application
-│   ├── migrations/            # Database migration history
-│   ├── templates/tracker/     # HTML templates
-│   │   ├── workout_list.html  # Workout list with category filter
-│   │   ├── dashboard.html     # Charts and statistics dashboard
-│   │   ├── add_workout.html   # Add new workout form
-│   │   ├── edit_workout.html  # Edit workout form
-│   │   └── delete_workout.html# Delete confirmation page
-│   ├── admin.py               # Customized admin panel
-│   ├── models.py              # Category and Workout models
-│   ├── views.py               # Web views and dashboard logic
-│   ├── forms.py               # Django ModelForms
-│   ├── urls.py                # App URL patterns
-│   ├── serializers.py         # DRF serializers for API
-│   ├── api_views.py           # REST API views
-│   └── api_urls.py            # API URL patterns
+├── accounts/                   # Authentication application
+│   ├── views.py                # Login, register, logout views
+│   ├── urls.py                 # Auth URL patterns
+│   └── templates/accounts/     # Login & register templates
 │
-├── accounts/                  # Authentication application
-│   ├── templates/accounts/    # Login and register templates
-│   ├── views.py               # Login, register, logout views
-│   └── urls.py                # Auth URL patterns
-│
-├── manage.py                  # Django management utility
-└── requirements.txt           # Python dependencies
+├── manage.py                   # Django management utility
+└── requirements.txt            # Python dependencies
+```
+
 ---
 
 ## 🔌 REST API Endpoints
@@ -124,6 +127,7 @@ fitness_tracker/
 | GET | `/api/summary/` | Get stats summary | ✅ |
 
 ### Sample API Response — GET /api/workouts/
+
 ```json
 {
     "count": 5,
@@ -249,6 +253,19 @@ Deployed on **PythonAnywhere** free tier:
 
 ---
 
+## 🏆 What I Learned
+
+1. **Project setup** — virtual environments, Django project structure
+2. **Database modeling** — models, migrations, relationships
+3. **Authentication** — Django's built-in auth system
+4. **CRUD operations** — forms, views, templates
+5. **REST APIs** — Django REST Framework, serializers
+6. **Data visualization** — Chart.js with Django backend
+7. **Deployment** — taking a local project live on the internet
+8. **Version control** — Git workflow, GitHub
+
+---
+
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
@@ -262,19 +279,6 @@ This project is open source and available under the [MIT License](LICENSE).
 - 🌐 Live App: [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)
 - 💻 GitHub: [@Sanjay284-beep](https://github.com/Sanjay284-beep)
 - 📧 Email: narrasanjayigy7@gmail.com
-
----
-
-## 🏆 What I Learned
-
-1. **Project setup** — virtual environments, Django project structure
-2. **Database modeling** — models, migrations, relationships
-3. **Authentication** — Django's built-in auth system
-4. **CRUD operations** — forms, views, templates
-5. **REST APIs** — Django REST Framework, serializers
-6. **Data visualization** — Chart.js with Django backend
-7. **Deployment** — taking a local project live on the internet
-8. **Version control** — Git workflow, GitHub
 
 ---
 
