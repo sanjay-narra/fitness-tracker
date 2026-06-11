@@ -277,7 +277,7 @@ This project is open source and available under the [MIT License](LICENSE).
 **Narra Sanjay** — B.Tech Computer Science Engineering (2026)
 
 - 🌐 Live App: [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)
-- 💻 GitHub: [@Sanjay284-beep](https://github.com/Sanjay284-beep)
+- 💻 GitHub: [github.com/sanjay-narra](https://github.com/sanjay-narra)
 - 📧 Email: narrasanjayigy7@gmail.com
 
 ---
