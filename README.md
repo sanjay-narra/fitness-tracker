@@ -9,7 +9,7 @@
 > A full-stack fitness tracking web application built with Python Django — featuring user authentication, workout management, category filtering, interactive charts, and a REST API.
 
 🌐 **Live Demo:** [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)
-📂 **GitHub:** [github.com/Sanjay284-beep/fitness-tracker](https://github.com/Sanjay284-beep/fitness-tracker)
+📂 **GitHub:** [github.com/sanjay-narra/fitness-tracker](https://github.com/sanjay-narra/fitness-tracker)
 
 ---
 
