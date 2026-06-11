@@ -159,7 +159,7 @@ fitness_tracker/
 
 **1. Clone the repository:**
 ```bash
-git clone https://github.com/Sanjay284-beep/fitness-tracker.git
+git clone https://github.com/sanjay-narra/fitness-tracker.git
 cd fitness-tracker
 ```
 
@@ -273,13 +273,12 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 ## 👨‍💻 Author
+**Narra Sanjay**
+- 🌐 Live App: [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)  
+- 💻 GitHub: [github.com/sanjay-narra](https://github.com/sanjay-narra)  
+- 📧 Email: narrasanjayigy7@gmail.com  
 
-**Narra Sanjay** — B.Tech Computer Science Engineering (2026)
-
-- 🌐 Live App: [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)
-- 💻 GitHub: [github.com/sanjay-narra](https://github.com/sanjay-narra)
-- 📧 Email: narrasanjayigy7@gmail.com
 
 ---
 
-> Built from scratch with ❤️ — from zero to a fully deployed full-stack web application! 🚀
+> Developed end‑to‑end, from initial design to full deployment. 🚀
