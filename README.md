@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)
 ![Django](https://img.shields.io/badge/Django-4.2-green?style=for-the-badge&logo=django)
-![DRF](https://img.shields.io/badge/Django_REST_Framework-3.x-red?style=for-the-badge)
+![DRF](![DRF](https://img.shields.io/badge/DRF-3.x-red?style=for-the-badge&logo=django)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey?style=for-the-badge&logo=sqlite)
 ![Deployed](https://img.shields.io/badge/Deployed-PythonAnywhere-yellow?style=for-the-badge)
 
