@@ -242,14 +242,12 @@ Deployed on **PythonAnywhere** free tier:
 
 ## 🔮 Future Improvements
 
-- [ ] Workout streak tracking
-- [ ] Weekly/monthly goals
-- [ ] Export workouts as CSV
-- [ ] Social features — follow friends
-- [ ] Mobile app using the REST API
-- [ ] PostgreSQL for production
-- [ ] Docker containerization
-- [ ] CI/CD with GitHub Actions
+- [ ] Workout streak tracking with badges  
+- [ ] Mobile app powered by the REST API  
+- [ ] PostgreSQL migration for production scalability  
+- [ ] Docker containerization for portable deployments  
+- [ ] CI/CD pipeline with GitHub Actions  
+
 
 ---
 
