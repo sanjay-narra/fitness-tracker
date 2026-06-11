@@ -1,62 +1,75 @@
-# 🏋️ FitTrack — Personal Fitness Tracker Web Application
+<div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)
-![Django](https://img.shields.io/badge/Django-4.2-green?style=for-the-badge&logo=django)
-![DRF](https://img.shields.io/badge/DRF-3.x-red?style=for-the-badge&logo=django)
-![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey?style=for-the-badge&logo=sqlite)
-![Deployed](https://img.shields.io/badge/Deployed-PythonAnywhere-yellow?style=for-the-badge)
+<h1>🏋️ FitTrack — Personal Fitness Tracker</h1>
 
-> A full-stack fitness tracking web application built with Python Django — featuring user authentication, workout management, category filtering, interactive charts, and a REST API.
+<p><em>A full-stack Django web app to log workouts, visualize progress with interactive charts, and expose a complete REST API — deployed live on PythonAnywhere.</em></p>
 
-🌐 **Live Demo:** [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)
-📂 **GitHub:** [github.com/sanjay-narra/fitness-tracker](https://github.com/sanjay-narra/fitness-tracker)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-4.2-092E20?style=for-the-badge&logo=django&logoColor=white)
+![DRF](https://img.shields.io/badge/DRF-3.x-D00000?style=for-the-badge&logo=django&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Deployed](https://img.shields.io/badge/Deployed-PythonAnywhere-FFD43B?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)
+
+<br>
+
+🌐 **[Live Demo](https://sanjayn.pythonanywhere.com)** &nbsp;·&nbsp; 📂 **[GitHub Repo](https://github.com/sanjay-narra/fitness-tracker)**
+
+</div>
 
 ---
 
-## 🖼️ Screenshots
+## 🚀 What This Project Does
 
-| Login | Workouts |
-|-------|----------|
-| ![Login](screenshots/Login.png) | ![Workouts](screenshots/workouts.png) |
+FitTrack lets users register, log their workouts by category, and instantly see their progress on a live dashboard — weekly bar charts, category doughnut charts, and summary stats (total workouts, total minutes, most active day). On the backend, every feature is also exposed as a **secured REST API** built with Django REST Framework, ready to power a mobile app.
+
+Built end-to-end: database design → authentication → CRUD → API → Chart.js visualizations → cloud deployment.
+
+---
+
+## 🖥️ App Preview
+
+<div align="center">
+
+| Login | Workout List |
+|:---:|:---:|
+| <img src="screenshots/Login.png" width="100%" alt="Login Page"/> | <img src="screenshots/workouts.png" width="100%" alt="Workout List"/> |
 
 | Dashboard | Add Workout |
-|-----------|-------------|
-| ![Dashboard](screenshots/dashboard.png) | ![Add Workout](screenshots/Add.png) |
+|:---:|:---:|
+| <img src="screenshots/dashboard.png" width="100%" alt="Dashboard"/> | <img src="screenshots/Add.png" width="100%" alt="Add Workout"/> |
+
+</div>
 
 ---
 
 ## ✨ Features
 
-### 🔐 User Authentication
-- Secure user registration and login system
-- Each user has their own private workout data
-- Session-based authentication
-- Logout functionality
+### 🔐 Authentication
+- Secure registration, login, and logout
+- Each user sees only their own data
+- Session-based authentication with login-required protection on all views
 
 ### 💪 Workout Management
-- Log workouts with activity name, duration, and date
-- Edit existing workouts
-- Delete workouts with confirmation page
-- Workouts sorted by most recent first
+- Log workouts with activity name, duration, date, and category
+- Edit and delete workouts (with confirmation)
+- List sorted by most recent first
 
-### 🏷️ Workout Categories
-- Separate Category model with ForeignKey relationship
-- 5 default categories — Cardio, Strength, Flexibility, Sports, Other
-- Color-coded badges for each category
-- Filter workouts by category with one click
-- Categories manageable through Django admin panel
+### 🏷️ Categories
+- 5 default categories: Cardio, Strength, Flexibility, Sports, Other
+- Color-coded badges per category
+- One-click category filter on the workout list
+- Fully manageable via Django admin
 
 ### 📊 Interactive Dashboard
-- Weekly activity bar chart (last 7 days)
-- Category breakdown doughnut chart
-- Stats cards — Total Workouts, Total Minutes, Total Hours, Most Active Day
-- Powered by Chart.js
-- Real-time data from Django backend
+- **Weekly bar chart** — activity over the last 7 days
+- **Doughnut chart** — breakdown by category
+- **Stats cards** — Total Workouts · Total Minutes · Total Hours · Most Active Day
+- Powered by Chart.js with real-time data from the Django backend
 
-### 🚀 REST API
-- Full CRUD API for workouts
-- Categories listing endpoint
-- Summary statistics endpoint
+### 🔌 REST API
+- Full CRUD for workouts
+- Categories listing and summary stats endpoints
 - Secured with session authentication
 - Built with Django REST Framework
 
@@ -66,67 +79,30 @@
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
-| **Backend** | Python 3.13 | Core programming language |
-| **Framework** | Django 4.2 | Web framework |
-| **API** | Django REST Framework | REST API building |
-| **Database** | SQLite | Data storage |
-| **Frontend** | HTML5, CSS3 | Templates and styling |
-| **Charts** | Chart.js | Interactive data visualization |
-| **Deployment** | PythonAnywhere | Cloud hosting |
-| **Version Control** | Git + GitHub | Source code management |
-
----
-
-## 📁 Project Architecture
-
-```
-fitness_tracker/
-├── fitness_project/            # Django project configuration
-│   ├── settings.py             # Project settings
-│   ├── urls.py                 # Root URL configuration
-│   └── wsgi.py                 # WSGI deployment entry point
-│
-├── tracker/                    # Main application
-│   ├── models.py               # Category & Workout models
-│   ├── views.py                # Web views & dashboard logic
-│   ├── forms.py                # Django ModelForms
-│   ├── admin.py                # Customized admin panel
-│   ├── serializers.py          # DRF serializers for API
-│   ├── api_views.py            # REST API views
-│   ├── api_urls.py             # API URL patterns
-│   ├── urls.py                 # App URL patterns
-│   ├── migrations/             # Database migration history
-│   └── templates/tracker/      # HTML templates
-│       ├── workout_list.html   # Workout list with category filter
-│       ├── dashboard.html      # Charts and statistics dashboard
-│       ├── add_workout.html    # Add new workout form
-│       ├── edit_workout.html   # Edit workout form
-│       └── delete_workout.html # Delete confirmation page
-│
-├── accounts/                   # Authentication application
-│   ├── views.py                # Login, register, logout views
-│   ├── urls.py                 # Auth URL patterns
-│   └── templates/accounts/     # Login & register templates
-│
-├── manage.py                   # Django management utility
-└── requirements.txt            # Python dependencies
-```
+| Backend | Python 3.13 | Core language |
+| Framework | Django 4.2 | Web framework & ORM |
+| API | Django REST Framework | REST API |
+| Database | SQLite | Data storage |
+| Frontend | HTML5, CSS3 | Templates & styling |
+| Charts | Chart.js | Interactive visualizations |
+| Hosting | PythonAnywhere | Cloud deployment |
+| Version Control | Git + GitHub | Source management |
 
 ---
 
 ## 🔌 REST API Endpoints
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
 | GET | `/api/workouts/` | List all user workouts | ✅ |
-| POST | `/api/workouts/` | Create new workout | ✅ |
-| GET | `/api/workouts/<id>/` | Get single workout | ✅ |
-| PUT | `/api/workouts/<id>/` | Update workout | ✅ |
-| DELETE | `/api/workouts/<id>/` | Delete workout | ✅ |
+| POST | `/api/workouts/` | Create a new workout | ✅ |
+| GET | `/api/workouts/<id>/` | Get a single workout | ✅ |
+| PUT | `/api/workouts/<id>/` | Update a workout | ✅ |
+| DELETE | `/api/workouts/<id>/` | Delete a workout | ✅ |
 | GET | `/api/categories/` | List all categories | ✅ |
 | GET | `/api/summary/` | Get stats summary | ✅ |
 
-### Sample API Response — GET /api/workouts/
+**Sample response — `GET /api/workouts/`**
 
 ```json
 {
@@ -148,57 +124,86 @@ fitness_tracker/
 
 ---
 
+## 📁 Project Structure
+
+```
+fitness_tracker/
+├── fitness_project/            # Django project config
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── tracker/                    # Core app
+│   ├── models.py               # Category & Workout models
+│   ├── views.py                # Web views & dashboard logic
+│   ├── forms.py                # Django ModelForms
+│   ├── admin.py                # Customized admin panel
+│   ├── serializers.py          # DRF serializers
+│   ├── api_views.py            # REST API views
+│   ├── api_urls.py             # API URL patterns
+│   ├── urls.py                 # App URL patterns
+│   └── templates/tracker/
+│       ├── workout_list.html
+│       ├── dashboard.html
+│       ├── add_workout.html
+│       ├── edit_workout.html
+│       └── delete_workout.html
+│
+├── accounts/                   # Auth app
+│   ├── views.py
+│   ├── urls.py
+│   └── templates/accounts/
+│
+├── manage.py
+└── requirements.txt
+```
+
+---
+
 ## ⚙️ Local Setup
 
-### Prerequisites
-- Python 3.8 or higher
-- pip
-- Git
-
-### Installation Steps
-
-**1. Clone the repository:**
+**1. Clone the repo**
 ```bash
 git clone https://github.com/sanjay-narra/fitness-tracker.git
 cd fitness-tracker
 ```
 
-**2. Create and activate virtual environment:**
+**2. Create & activate virtual environment**
 ```bash
 # Windows
 python -m venv venv
 venv\Scripts\activate
 
-# macOS/Linux
+# macOS / Linux
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-**3. Install dependencies:**
+**3. Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-**4. Apply database migrations:**
+**4. Apply migrations**
 ```bash
 python manage.py migrate
 ```
 
-**5. Add default categories:**
+**5. Seed default categories**
 ```bash
 python manage.py shell
 ```
 ```python
 from tracker.models import Category
-Category.objects.create(name='Cardio', color='#e74c3c', icon='🏃')
-Category.objects.create(name='Strength', color='#e67e22', icon='💪')
+Category.objects.create(name='Cardio',      color='#e74c3c', icon='🏃')
+Category.objects.create(name='Strength',    color='#e67e22', icon='💪')
 Category.objects.create(name='Flexibility', color='#27ae60', icon='🧘')
-Category.objects.create(name='Sports', color='#2980b9', icon='⚽')
-Category.objects.create(name='Other', color='#8e44ad', icon='🏋️')
+Category.objects.create(name='Sports',      color='#2980b9', icon='⚽')
+Category.objects.create(name='Other',       color='#8e44ad', icon='🏋️')
 exit()
 ```
 
-**6. Run the development server:**
+**6. Run the dev server**
 ```bash
 python manage.py runserver
 ```
@@ -207,76 +212,41 @@ Visit **http://127.0.0.1:8000** in your browser.
 
 ---
 
-## 🚀 Deployment
-
-Deployed on **PythonAnywhere** free tier:
-- Configured WSGI file to point to Django settings
-- Set `ALLOWED_HOSTS`, `STATIC_ROOT`, `DEBUG=False` for production
-- Ran `collectstatic` to serve static files
-
----
-
 ## 🧠 Key Concepts Demonstrated
 
-### Backend
-- Django MVT Architecture
-- ForeignKey Relationships with `SET_NULL`
-- Query Optimization using `select_related()`
-- Django ORM Aggregations — `Sum()`, `Count()`, `annotate()`
-- Class-based API Views with Django REST Framework
-- Login Required Decorator for view protection
-
-### Frontend
-- Django Template Language
-- Chart.js Integration with backend JSON data
-- Responsive CSS Grid layout
-- Dynamic category color styling from database
-
-### DevOps
-- Git version control with meaningful commit history
-- PythonAnywhere cloud deployment
-- Virtual environment management
-- Static files with `collectstatic`
+| Area | Concepts |
+|------|----------|
+| **Django ORM** | ForeignKey with `SET_NULL`, `select_related()`, `Sum()` / `Count()` / `annotate()` |
+| **Auth** | Session-based login, `@login_required` decorator |
+| **REST API** | DRF serializers, class-based API views, CRUD endpoints |
+| **Frontend** | Django Template Language, Chart.js JSON integration, CSS Grid |
+| **Deployment** | WSGI config, `DEBUG=False`, `collectstatic`, PythonAnywhere |
+| **DevOps** | Git workflow, virtual environments, dependency management |
 
 ---
 
-## 🔮 Future Improvements
+## 🔮 Roadmap
 
-- [ ] Workout streak tracking with badges  
-- [ ] Mobile app powered by the REST API  
-- [ ] PostgreSQL migration for production scalability  
-- [ ] Docker containerization for portable deployments  
-- [ ] CI/CD pipeline with GitHub Actions  
-
-
----
-
-## 🏆 What I Learned
-
-1. **Project setup** — virtual environments, Django project structure
-2. **Database modeling** — models, migrations, relationships
-3. **Authentication** — Django's built-in auth system
-4. **CRUD operations** — forms, views, templates
-5. **REST APIs** — Django REST Framework, serializers
-6. **Data visualization** — Chart.js with Django backend
-7. **Deployment** — taking a local project live on the internet
-8. **Version control** — Git workflow, GitHub
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+- [ ] Workout streak tracking with badges
+- [ ] Mobile app using the REST API
+- [ ] PostgreSQL migration for production
+- [ ] Docker containerization
+- [ ] CI/CD with GitHub Actions
 
 ---
 
 ## 👨‍💻 Author
-**Narra Sanjay**
-- 🌐 Live App: [sanjayn.pythonanywhere.com](https://sanjayn.pythonanywhere.com)  
-- 💻 GitHub: [github.com/sanjay-narra](https://github.com/sanjay-narra)  
-- 📧 Email: narrasanjayigy7@gmail.com  
 
+<div align="center">
+
+**Narra Sanjay** · B.Tech Computer Science Engineering, 2026
+
+[![Live App](https://img.shields.io/badge/Live%20App-sanjayn.pythonanywhere.com-22c55e?style=for-the-badge&logo=python&logoColor=white)](https://sanjayn.pythonanywhere.com)&nbsp;&nbsp;[![GitHub](https://img.shields.io/badge/GitHub-sanjay--narra-181717?style=for-the-badge&logo=github)](https://github.com/sanjay-narra)&nbsp;&nbsp;[![Email](https://img.shields.io/badge/Email-narrasanjayigy7@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:narrasanjayigy7@gmail.com)
+
+</div>
 
 ---
 
-> Developed end‑to‑end, from initial design to full deployment. 🚀
+<div align="center">
+<sub>Licensed under the <a href="LICENSE">MIT License</a> · Built and deployed end-to-end by Narra Sanjay</sub>
+</div>
