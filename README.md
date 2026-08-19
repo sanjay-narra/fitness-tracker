@@ -5,7 +5,7 @@
 <p><em>A full-stack Django web app to log workouts, visualize progress with interactive charts, and expose a complete REST API — deployed live on PythonAnywhere.</em></p>
 
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-4.2-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Django](https://img.shields.io/badge/Django-6.0.3-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![DRF](https://img.shields.io/badge/DRF-3.x-D00000?style=for-the-badge&logo=django&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Deployed](https://img.shields.io/badge/Deployed-PythonAnywhere-FFD43B?style=for-the-badge)
